@@ -1,9 +1,17 @@
 const Persons = ({
     persons,
-    filter
+    filter,
+    handleDeletePerson
 }) => {
     return persons.filter((person) => person.name.toLowerCase().includes(filter.toLocaleLowerCase()))
-        .map((person) => <p key={person.id}>{person.name} {person.phone}</p>)
+        .map((person) => {
+            return (
+                <div key={person.id}>
+                    {person.name} {person.phone}
+                    <button key={person.id} onClick={() => { handleDeletePerson(person) }}>delete</button>
+                </div>
+            )
+        })
 }
 
 export default Persons
