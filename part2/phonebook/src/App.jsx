@@ -3,12 +3,14 @@ import PersonForm from './component/PersonForm'
 import Persons from './component/Persons'
 import { useEffect, useState } from 'react'
 import phoneBookService from './services/PhoneService'
+import NotificationMessage from './component/NotificationMessage'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [filter, setFilter] = useState('')
+  const [successMessage, setSuccessMessage] = useState(null)
 
   const handleSearch = (e) => {
     setFilter(e.target.value)
@@ -36,13 +38,16 @@ const App = () => {
   const addPerson = (e) => {
     e.preventDefault()
     const person = persons.find((person) => person.name.toLowerCase() == newName.toLocaleLowerCase())
-    if (person !== null) {
+    if (person !== undefined) {
       const confirm = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
       if (confirm) {
         phoneBookService
           .updatePerson(person, newPhone)
           .then((personUpdated) => {
             setPersons(persons.filter((person) => person.id !== personUpdated.id).concat(personUpdated))
+          })
+          .catch((error) => {
+            alert(`Information of ${person.name} has already been removed from server`)
           })
       }
     }
@@ -56,6 +61,8 @@ const App = () => {
           setPersons(persons.concat(person))
           setNewName('')
           setNewPhone('')
+          setSuccessMessage(`${newName} was added to phone book!`)
+          setTimeout(() => setSuccessMessage(null), 5000)
         })
     }
   }
@@ -70,6 +77,7 @@ const App = () => {
 
   return (
     <div>
+      {successMessage !== null && <NotificationMessage message={successMessage} />}
       <h2>Phonebook</h2>
       <Filter
         search={filter}
