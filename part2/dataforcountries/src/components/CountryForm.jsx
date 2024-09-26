@@ -1,10 +1,10 @@
 const CountryForm = ({
-    search,
+    filter,
     handleSearch
 }) => {
     return (
         <div>
-            Find countries : <input value={search} onChange={handleSearch} />
+            Find countries : <input value={filter} onChange={handleSearch} />
         </div>
     )
 }

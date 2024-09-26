@@ -1,33 +1,36 @@
-import CountryForm from "./components/CountryForm"
-import Countries from "./components/Countries"
 import { useEffect, useState } from "react"
 import countriesFinder from "./services/CountriesFinder"
+import CountryForm from "./components/CountryForm"
+import CountryList from "./components/CountryList"
 
 function App() {
 
-  const [search, setSearch] = useState('')
-  const [result, setResult] = useState([])
+  const [filter, setFilter] = useState('')
+  const [countries, setCountries] = useState([])
 
   const handleSearch = (e) => {
-    setSearch(e.target.value)
+    setFilter(e.target.value)
   }
 
   useEffect(() => {
     countriesFinder
       .getAll()
-      .then(countries => setResult(countries.filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase()))))
+      .then(countries => setCountries(countries))
   },
-    [search]
+    []
   )
 
+  const filteredCountries = countries.filter((country) => country.name.common.toLowerCase().includes(filter.toLowerCase()))
+
   return (
-    <>
-      <CountryForm search={search} handleSearch={handleSearch} />
-      {search !== '' &&
-        <Countries result={result} />
+    <div>
+      <CountryForm filter={filter} handleSearch={handleSearch} />
+      {filter !== '' &&
+        <CountryList countries={filteredCountries} />
       }
-    </>
+    </div>
   )
+
 }
 
 export default App
