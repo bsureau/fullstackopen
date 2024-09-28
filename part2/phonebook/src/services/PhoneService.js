@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const getAllPersons = () => {
     return axios
-        .get('http://localhost:3000/persons')
+        .get('/api/persons')
         .then(response => {
             return response.data
         })
@@ -11,7 +11,7 @@ const getAllPersons = () => {
 const createNewPerson = (newName, newPhone) => {
     return axios
         .post(
-            'http://localhost:3000/persons',
+            '/api/persons',
             {
                 name: newName,
                 phone: newPhone
@@ -24,7 +24,7 @@ const createNewPerson = (newName, newPhone) => {
 
 const deletePerson = (personId) => {
     return axios
-        .delete(`http://localhost:3000/persons/${personId}`)
+        .delete(`/api/persons/${personId}`)
         .then((response) => {
             return response.data
         })
@@ -33,7 +33,7 @@ const deletePerson = (personId) => {
 const updatePerson = (person, newPhone) => {
     return axios
         .put(
-            `http://localhost:3000/persons/${person.id}`,
+            `/api/persons/${person.id}`,
             {
                 ...person,
                 phone: newPhone
