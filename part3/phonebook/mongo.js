@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.set('strict', false)
 
 
 const personSchema = mongoose.Schema({
@@ -11,7 +12,6 @@ const Person = mongoose.model('Person', personSchema)
 const connectToDatabase = (password) => {
     const url = `mongodb+srv://fullstack:${password}@cluster0.nmq3e.mongodb.net/phonebook?retryWrites=true&w=majority`
     mongoose.connect(url)
-    mongoose.set('strictQuery', false)
 }
 
 if (process.argv.length === 3) {

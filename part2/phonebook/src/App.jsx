@@ -24,13 +24,13 @@ const App = () => {
     setNewPhone(e.target.value)
   }
 
-  const handleDeletePerson = (person) => {
-    const confirm = window.confirm(`Are you sure you want to delete ${person.name} from your phone book?`)
+  const handleDeletePerson = (personToDelete) => {
+    const confirm = window.confirm(`Are you sure you want to delete ${personToDelete.name} from your phone book?`)
     if (confirm) {
       phoneBookService
-        .deletePerson(person.id)
-        .then((deletedPerson) => {
-          setPersons(persons.filter((person) => person.id !== deletedPerson.id))
+        .deletePerson(personToDelete.id)
+        .then(() => {
+          setPersons(persons.filter((person) => person.id !== personToDelete.id))
         })
     }
   }
