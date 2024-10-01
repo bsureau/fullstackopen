@@ -11,6 +11,7 @@ const App = () => {
   const [newPhone, setNewPhone] = useState('')
   const [filter, setFilter] = useState('')
   const [successMessage, setSuccessMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const handleSearch = (e) => {
     setFilter(e.target.value)
@@ -64,6 +65,10 @@ const App = () => {
           setSuccessMessage(`${newName} was added to phone book!`)
           setTimeout(() => setSuccessMessage(null), 5000)
         })
+        .catch(error => {
+          setErrorMessage(error.response.data.error)
+          setTimeout(() => setErrorMessage(null), 5000)
+        })
     }
   }
 
@@ -77,7 +82,8 @@ const App = () => {
 
   return (
     <div>
-      {successMessage !== null && <NotificationMessage message={successMessage} />}
+      {successMessage !== null && <NotificationMessage message={successMessage} color='green' />}
+      {errorMessage !== null && <NotificationMessage message={errorMessage} color='red' />}
       <h2>Phonebook</h2>
       <Filter
         search={filter}

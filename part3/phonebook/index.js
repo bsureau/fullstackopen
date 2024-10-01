@@ -93,6 +93,14 @@ app.use(unknownEndpoint)
 
 const errorHandler = (error, req, res, next) => {
     console.log('error message : ', error.message)
+
+    if (error.name === 'ValidationError') {
+        res
+            .status(400)
+            .json({
+                error: error.message
+            })
+    }
     next(error)
 }
 app.use(errorHandler)

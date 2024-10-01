@@ -1,9 +1,9 @@
 import '../index.css'
 
-const NotificationMessage = ({ message }) => {
+const NotificationMessage = ({ message, color }) => {
 
     return (
-        <p className='notification'>{message}</p>
+        <p className='notification' style={{ backgroundColor: color }}> {message}</p >
     )
 }
 
