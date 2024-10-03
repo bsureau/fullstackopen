@@ -145,7 +145,34 @@ describe('Blogs', () => {
             .expect(httpResponseStatus)
     })
 
-    test.each(blogs)('')
+    test('it updates a blog', async () => {
+        const blogToUpdateId = '5a422b891b54a676234d17fa'
+
+        const response = await api
+            .put(`/api/blogs/${blogToUpdateId}`)
+            .send({
+                likes: 30
+            })
+
+        expect(response.body.likes).toBe(30)
+
+        const updatedBlog = await Blog.findById(blogToUpdateId)
+
+        expect(updatedBlog.likes).toBe(30)
+    })
+
+    test('it deletes a blog', async () => {
+        const blogToDeleteId = '5a422b891b54a676234d17fa'
+
+        const response = await api
+            .delete(`/api/blogs/${blogToDeleteId}`)
+
+        expect(response.status).toBe(204)
+
+        const result = await Blog.findById(blogToDeleteId)
+
+        expect(result).toBeNull();
+    })
 
     afterAll(() => {
         mongoose.connection.close()

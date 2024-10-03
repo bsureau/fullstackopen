@@ -18,4 +18,34 @@ router.post('/', async (request, response) => {
     }
 })
 
+router.put('/:id', async (request, response) => {
+    try {
+        const postToUpdateId = request.params.id
+        const postToUpdate = await Blog.findById(postToUpdateId)
+        // const blog = {
+        //     ...postToUpdate,
+        //     ...request.body
+        // }
+        // console.log(blog)
+        const updatedBlog = await Blog.findByIdAndUpdate(postToUpdateId, { likes: 30 }, { new: true })
+        response.json(updatedBlog)
+    } catch (e) {
+        response.status(400).json({
+            error: e.message
+        })
+    }
+})
+
+router.delete('/:id', async (request, response) => {
+    try {
+        const postToDeleteId = request.params.id
+        await Blog.findByIdAndDelete(postToDeleteId)
+        response.status(204).end()
+    } catch (e) {
+        response.status(400).json({
+            error: e.message
+        })
+    }
+})
+
 module.exports = router
