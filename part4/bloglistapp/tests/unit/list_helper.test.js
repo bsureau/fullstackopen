@@ -1,4 +1,4 @@
-const listHelper = require('../utils/list_helper')
+const listHelper = require('../../utils/list_helper')
 
 test('dummy', () => {
     const blogs = []
@@ -60,11 +60,11 @@ describe('Blogs', () => {
         }
     ]
 
-    test('When a list contains several blog posts, equals the sum of likes of that', () => {
+    test('it returns the sum of likes in a blog list', () => {
         expect(listHelper.totalLikes(blogs)).toBe(36)
     })
 
-    test('When a list contains several blog posts, equals the one with most likes, aka favorite', () => {
+    test('it returns the blog post with most likes', () => {
         expect(listHelper.favoriteBlog(blogs)).toEqual({
             title: "Canonical string reduction",
             author: "Edsger W. Dijkstra",
@@ -72,14 +72,14 @@ describe('Blogs', () => {
         })
     })
 
-    test('When a list contains several blog posts, equals the author who has the largest amount of blogs', () => {
+    test('it returns the author with the largest amount of blogs', () => {
         expect(listHelper.mostBlogs(blogs)).toEqual({
             author: "Robert C. Martin",
             blogs: 3
         })
     })
 
-    test('When a list contains several blog posts, equals the author who has most likes', () => {
+    test('it returns the author with the most important total likes', () => {
         expect(listHelper.mostLikes(blogs)).toEqual({
             author: "Edsger W. Dijkstra",
             likes: 17
