@@ -3,10 +3,13 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const blogRouter = require('./controllers/blog')
+const usersRouter = require('./controllers/user')
+const loginRouter = require('./controllers/login')
 require('dotenv').config()
 
 app.use(cors())
 app.use(express.json())
+
 
 const MONGODB_PASSWORD = process.env.NODE_ENV === 'prod'
     ? process.env.MONGODB_PASSWORD
@@ -23,5 +26,7 @@ mongoose
 
 
 app.use('/api/blogs', blogRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 module.exports = app

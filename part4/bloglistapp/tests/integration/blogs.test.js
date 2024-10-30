@@ -1,7 +1,9 @@
 const supertest = require('supertest')
 const app = require('../../app')
 const Blog = require('../../models/blog')
+const User = require('../../models/user')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
 const api = supertest(app)
 
 
@@ -58,6 +60,24 @@ describe('Blogs', () => {
         }
     ]
 
+    const user = new User({
+        username: 'JeanNémard',
+        password: '1234',
+        passwordHash: 'hashed1234'
+    })
+
+    let token = null
+
+    beforeAll(async () => {
+        await User.deleteMany({})
+        await user.save()
+        const userForToken = {
+            username: user.username,
+            id: user._id
+        }
+        token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: '1h' })
+    })
+
     const initializeDatabase = async () => {
         await Blog.deleteMany({})
         const promiseArray = initialBlogs.map(async blog => {
@@ -95,12 +115,28 @@ describe('Blogs', () => {
 
         const response = await api
             .post('/api/blogs')
+            .set('Authorization', `Bearer ${token}`)
             .send(newBlog)
-
 
         const blogs = await Blog.find({})
 
         expect(blogs.length).toBe(initialBlogs.length + 1)
+    })
+
+    test('it returns 401 forbbiden if user creates blog without being logged', async () => {
+        const newBlog = {
+            title: "Mon blog",
+            author: "Jean Némard",
+            url: "http://blog.jeannemard.fr",
+            likes: 20,
+            userId: user._id.toString()
+        }
+
+        const response = await api
+            .post('/api/blogs')
+            .send(newBlog)
+
+        expect(response.status).toBe(401)
     })
 
     test('it creates a new blog with 0 like by default', async () => {
@@ -108,10 +144,12 @@ describe('Blogs', () => {
             title: "Mon blog",
             author: "Jean Némard",
             url: "http://blog.jeannemard.fr",
+            user: user.id
         }
 
         const response = await api
             .post('/api/blogs')
+            .set('Authorization', `Bearer ${token}`)
             .send(newBlogWithMissingLikesProperty)
 
         const newBlog = await Blog.findById(response.body.id)
@@ -141,6 +179,7 @@ describe('Blogs', () => {
     test.each(blogs)('it returns 400 Bad Request if title or url are missing when creating a new blog', async (newBlogWithMissingRequiredProperty, httpResponseStatus) => {
         const response = await api
             .post('/api/blogs')
+            .set('Authorization', `Bearer ${token}`)
             .send(newBlogWithMissingRequiredProperty)
             .expect(httpResponseStatus)
     })
@@ -162,10 +201,24 @@ describe('Blogs', () => {
     })
 
     test('it deletes a blog', async () => {
-        const blogToDeleteId = '5a422b891b54a676234d17fa'
+
+        const newBlog = {
+            title: "Mon blog",
+            author: "Jean Némard",
+            url: "http://blog.jeannemard.fr",
+            likes: 20,
+        }
+
+        const createNewBlogResponse = await api
+            .post('/api/blogs')
+            .set('Authorization', `Bearer ${token}`)
+            .send(newBlog)
+
+        const blogToDeleteId = createNewBlogResponse.body.id
 
         const response = await api
             .delete(`/api/blogs/${blogToDeleteId}`)
+            .set('Authorization', `Bearer ${token}`)
 
         expect(response.status).toBe(204)
 
@@ -174,8 +227,7 @@ describe('Blogs', () => {
         expect(result).toBeNull();
     })
 
-    afterAll(() => {
-        mongoose.connection.close()
+    afterAll(async () => {
+        await mongoose.connection.close()
     })
 })
-
