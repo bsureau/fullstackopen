@@ -36,12 +36,7 @@ router.put('/:id', async (request, response) => {
     try {
         const postToUpdateId = request.params.id
         const postToUpdate = await Blog.findById(postToUpdateId)
-        // const blog = {
-        //     ...postToUpdate,
-        //     ...request.body
-        // }
-        // console.log(blog)
-        const updatedBlog = await Blog.findByIdAndUpdate(postToUpdateId, { likes: 30 }, { new: true })
+        const updatedBlog = await Blog.findByIdAndUpdate(postToUpdateId, { likes: postToUpdate.likes + 1 }, { new: true })
         response.json(updatedBlog)
     } catch (e) {
         response.status(400).json({

@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Togglable from './components/Togglable'
 import NewBlogForm from './components/BlogForm'
+import { jwtDecode } from 'jwt-decode'
 
 const App = () => {
 
@@ -16,6 +18,8 @@ const App = () => {
     event.preventDefault()
     try {
       const user = await loginService.login({ username, password })
+      const { id: userId } = jwtDecode(user.token)
+      user.id = userId
       setUser(user)
       setUsername('')
       setPassword('')
@@ -47,14 +51,12 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    const fetchData = async () => {
+      const blogs = await blogService.getAll()
+      setBlogs(blogs.sort((a, b) => a.likes - b.likes))
+    }
+    fetchData()
   }, [])
-
-  const handleAddNewBlog = (newBlog) => {
-    setBlogs([...blogs, newBlog])
-  }
 
   const loginForm = () => {
     return (
@@ -82,6 +84,27 @@ const App = () => {
     )
   }
 
+  const createNewBlog = async (title, author, url) => {
+    const newBlog = await blogService.create({ title, author, url })
+    setBlogs([newBlog, ...blogs])
+  }
+
+  const addLike = async (blog) => {
+    await blogService.addLike(blog.id)
+    setBlogs(blogs
+      .map(b => b.id === blog.id ? { ...b, likes: b.likes + 1 } : b)
+      .sort((a, b) => a.likes - b.likes)
+    )
+  }
+
+  const deleteBlog = async (blog) => {
+    const confirm = window.confirm(`Are you sure you want to delete ${blog.title} ?`)
+    if (confirm) {
+      await blogService.deleteBlog(blog.id)
+      setBlogs(blogs.filter(b => b.id !== blog.id))
+    }
+  }
+
   return (
     <div>
       {errorMessage !== null && <p>{errorMessage}</p>}
@@ -93,12 +116,14 @@ const App = () => {
             {user.username} logged in
             <button onClick={handleLogout}>logout</button>
           </div>
-          <NewBlogForm onBlogCreate={handleAddNewBlog} />
+          <Togglable closedButtonLabel='create new blog' openedButtonLabel='cancel'>
+            <NewBlogForm addBlog={createNewBlog} />
+          </Togglable>
         </div>
       }
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} user={user} addLike={addLike} deleteBlog={deleteBlog} />
       )}
     </div>
   )

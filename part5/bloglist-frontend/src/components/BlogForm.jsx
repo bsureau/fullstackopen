@@ -1,7 +1,7 @@
 import { useState } from "react"
 import blogService from '../services/blogs'
 
-const NewBlogForm = ({ onBlogCreate }) => {
+const NewBlogForm = ({ addBlog }) => {
 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -12,8 +12,7 @@ const NewBlogForm = ({ onBlogCreate }) => {
     const handleCreateNewBlog = async (event) => {
         try {
             event.preventDefault()
-            const blog = await blogService.create({ title, author, url })
-            onBlogCreate(blog)
+            await addBlog(title, author, url)
             setSuccessMessage(`new Blog '${title}' created!`)
             setTimeout(() => { setSuccessMessage('') }, 5000)
             setTitle('')
