@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1730796809485" clover="3.2.0">
+  <project timestamp="1730796809485" name="All files">
+    <metrics statements="45" coveredstatements="35" conditionals="11" coveredconditionals="8" methods="18" coveredmethods="9" elements="74" coveredelements="52" complexity="0" loc="45" ncloc="45" packages="2" files="4" classes="4"/>
+    <package name="components">
+      <metrics statements="31" coveredstatements="28" conditionals="11" coveredconditionals="8" methods="12" coveredmethods="9"/>
+      <file name="Blog.jsx" path="/Users/benjaminsureau/Code/fullstackopen/part5/bloglist-frontend/src/components/Blog.jsx">
+        <metrics statements="5" coveredstatements="4" conditionals="3" coveredconditionals="1" methods="3" coveredmethods="2"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+      </file>
+      <file name="BlogForm.jsx" path="/Users/benjaminsureau/Code/fullstackopen/part5/bloglist-frontend/src/components/BlogForm.jsx">
+        <metrics statements="21" coveredstatements="19" conditionals="4" coveredconditionals="3" methods="7" coveredmethods="5"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="44" type="stmt"/>
+        <line num="7" count="44" type="stmt"/>
+        <line num="8" count="44" type="stmt"/>
+        <line num="9" count="44" type="stmt"/>
+        <line num="10" count="44" type="stmt"/>
+        <line num="12" count="44" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="27" count="44" type="stmt"/>
+        <line num="35" count="10" type="stmt"/>
+        <line num="39" count="11" type="stmt"/>
+        <line num="43" count="21" type="stmt"/>
+      </file>
+      <file name="Togglable.jsx" path="/Users/benjaminsureau/Code/fullstackopen/part5/bloglist-frontend/src/components/Togglable.jsx">
+        <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="services">
+      <metrics statements="14" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
+      <file name="blogs.js" path="/Users/benjaminsureau/Code/fullstackopen/part5/bloglist-frontend/src/services/blogs.js">
+        <metrics statements="14" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

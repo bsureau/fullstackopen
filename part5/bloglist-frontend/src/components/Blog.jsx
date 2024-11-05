@@ -18,13 +18,12 @@ const Blog = ({
 }) => {
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       {blog.title} {blog.author}
       <Togglable closedButtonLabel='view' openedButtonLabel='hide'>
         <div>
           {blog.url}<br />
           likes: {blog.likes} <button onClick={() => { addLike(blog) }}>like</button><br />
-          {blog.author}<br />
           {user && user.id === blog.user?.id &&
             <button onClick={() => { deleteBlog(blog) }}>delete</button>
           }
