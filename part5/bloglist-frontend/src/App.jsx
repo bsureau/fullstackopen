@@ -66,6 +66,7 @@ const App = () => {
           <input
             name="username"
             type="text"
+            data-testid="username"
             value={username}
             onChange={({ target }) => { setUsername(target.value) }}
           />
@@ -75,6 +76,7 @@ const App = () => {
           <input
             name="password"
             type="password"
+            data-testid="password"
             value={password}
             onChange={({ target }) => { setPassword(target.value) }}
           />
@@ -102,13 +104,15 @@ const App = () => {
     if (confirm) {
       await blogService.deleteBlog(blog.id)
       setBlogs(blogs.filter(b => b.id !== blog.id))
+      setSuccessMessage(`blog ${blog.title} deleted!`)
+      setTimeout(() => { setSuccessMessage(null) }, 5000)
     }
   }
 
   return (
     <div>
-      {errorMessage !== null && <p>{errorMessage}</p>}
-      {successMessage !== null && <p>{successMessage}</p>}
+      {errorMessage !== null && <p data-testid="error-message">{errorMessage}</p>}
+      {successMessage !== null && <p data-testid="success-message">{successMessage}</p>}
       {user === null
         ? loginForm()
         : <div>

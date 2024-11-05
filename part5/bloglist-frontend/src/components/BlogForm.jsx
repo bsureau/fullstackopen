@@ -32,15 +32,15 @@ const NewBlogForm = ({ addBlog }) => {
             <form onSubmit={handleCreateNewBlog}>
                 <div>
                     Tiltle:
-                    <input type="text" name="title" value={title} placeholder="blog title" onChange={({ target }) => { setTitle(target.value) }} />
+                    <input type="text" name="title" data-testid='blog-form-title' value={title} placeholder="blog title" onChange={({ target }) => { setTitle(target.value) }} />
                 </div>
                 <div>
                     Author:
-                    <input type="text" name="author" value={author} placeholder="blog author" onChange={({ target }) => { setAuthor(target.value) }} />
+                    <input type="text" name="author" data-testid='blog-form-author' value={author} placeholder="blog author" onChange={({ target }) => { setAuthor(target.value) }} />
                 </div>
                 <div>
                     URL:
-                    <input type="text" name="url" value={url} placeholder="blog url" onChange={({ target }) => { setUrl(target.value) }} />
+                    <input type="text" name="url" value={url} data-testid='blog-form-url' placeholder="blog url" onChange={({ target }) => { setUrl(target.value) }} />
                 </div>
                 <button type="submit">create</button>
             </form>
