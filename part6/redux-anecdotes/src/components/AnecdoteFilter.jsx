@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux"
-import { filterAction } from "../reducers/filterReducer"
+import { filter } from "../reducers/filterReducer"
 
 const AnecdoteFilter = () => {
 
     const dispatch = useDispatch()
 
     const handleFilter = (event) => {
-        dispatch(filterAction(event.target.value))
+        dispatch(filter(event.target.value))
     }
 
     return (
