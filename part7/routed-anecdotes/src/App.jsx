@@ -25,8 +25,6 @@ const App = () => {
     }
   ])
 
-  console.log(anecdotes)
-
   const [notification, setNotification] = useState('')
 
   const addNew = (anecdote) => {
